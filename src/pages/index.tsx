@@ -1,17 +1,14 @@
 import { GetStaticProps } from 'next'
+import { convertDateString, convertDurationToStimeString } from '../utils/convert-data'
 
-type Episode = {
-  id: string,
+type Episode = {id: string,
   title: string,
   members: string,
-  published_at: string,
+  publishedAt: string,
   thumbnail: string,
   description: string,
-  file: {
-    url: string,
-    type: string,
-    duration: string,
-  }
+  duration: string,
+  url: string,
 }
 
 type HomeProps = {
@@ -20,7 +17,7 @@ type HomeProps = {
 
 
 export default function Home(props: HomeProps) {
-  // console.log(props.episodes)
+  console.log(props.episodes)
 
   return (
     <div>
@@ -36,9 +33,22 @@ export const getStaticProps: GetStaticProps = async ()  => {
   const response = await fetch(urlApi)
   const data = await response.json()
 
+  const episodes = data.map(episode => {
+    return {
+      id: episode.id,
+      title: episode.title,
+      thumbnail: episode.thumbnail,
+      members: episode.members,
+      publishedAt: convertDateString(episode.published_at),
+      duration: convertDurationToStimeString(episode.file.duration),
+      description: episode.description,
+      url: episode.file.url,
+    }
+  })
+
   return {
     props: {
-      episodes: data
+      episodes: episodes,
     },
     revalidate: 60 * 60 * 8
   }
