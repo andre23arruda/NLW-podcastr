@@ -1,5 +1,6 @@
 import { GetStaticProps } from 'next'
 import Image  from 'next/image'
+import Link from 'next/link'
 import { convertDateString, convertDurationToStimeString } from '../utils/convert-data'
 import styles from '../styles/home.module.scss'
 
@@ -32,7 +33,9 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                 <li key={ episode.id }>
                   <Image width={ 192 } height={ 192 } src={ episode.thumbnail } alt={ episode.title } objectFit="cover"/>
                   <div className={ styles.episodeDetails }>
-                    <a href={`/episode/${ episode.id }`}>{ episode.title }</a>
+                    <Link href={`/episode/${ episode.id }`}>
+                      <a >{ episode.title }</a>
+                    </Link>
                     <p>{ episode.members }</p>
                     <span>{ episode.publishedAt }</span>
                     <span>{ episode.duration }</span>
@@ -73,7 +76,9 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                       <Image width={ 120 } height={ 120 } src={ episode.thumbnail } alt={ episode.title } objectFit="cover"/>
                     </td>
                     <td>
-                      <a href={`/episode/${ episode.id }`}>{ episode.title }</a>
+                      <Link href={`/episode/${ episode.id }`}>
+                        <a >{ episode.title }</a>
+                      </Link>
                     </td>
                     <td>{ episode.members }</td>
                     <td className={ styles.episodePublishedAt }>{ episode.publishedAt }</td>
@@ -96,7 +101,7 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
   )
 }
 
-//// SSG
+// Consulta API
 export const getStaticProps: GetStaticProps = async ()  => {
   const urlApi = 'http://localhost:3333/episodes?_limit=12&_sort=published_at&_order=desc'
   const response = await fetch(urlApi)
