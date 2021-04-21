@@ -1,19 +1,88 @@
-.headerContainer {
-    background: var(--white);
-    height: 6.5rem;
+.playerContainer {
+    padding: 3rem 4rem;
+    width: 26.5rem;
+    height: 100vh;
+    background: var(--purple-500);
+    color: var(--white);
     display: flex;
+    flex-direction: column;
     align-items: center;
-    padding: 2rem 4rem;
-    border-bottom: 1px solid var(--gray-100);
+    justify-content: space-between;
 
-    p {
-        margin-left: 2rem;
-        padding: 0.25rem 0 0.25rem 2rem;
-        border-left: 1px solid var(--gray-100);
+    header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
     }
 
+    strong {
+        font-family: 'Lexend';
+        font-weight: 600;
+        text-align: center;
+    }
+
+    footer {
+        align-self: stretch;
+        &.empty {
+            opacity: 0.5;
+        }
+    }
+}
+
+.emptyPlayer {
+    width: 100%;
+    height: 20rem;
+    border: 1.5px dashed var(--purple-300);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem;
+    border-radius: 2rem;
+}
+
+.progress {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.875rem;
+
     span {
-        margin-left: auto;
-        text-transform: capitalize;
+        display: inline-block;
+        width: 4rem;
+        text-align: center;
+    }
+
+    .slider {
+        flex: 1;
+
+        .emptySlider {
+            width: 100%;
+            height: 4px;
+            background: var(--purple-300);
+            border-radius: 2px;
+        }
+    }
+
+
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2.5rem;
+    gap: 1.5rem;
+
+    button {
+        background: transparent;
+        border: none;
+        font-size: 0;
+    }
+
+    .playButton {
+        width: 4rem;
+        height: 4rem;
+        border-radius: 1rem;
+        background-color: var(--purple-400);
     }
 }
