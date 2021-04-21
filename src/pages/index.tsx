@@ -1,15 +1,26 @@
-import { useEffect } from "react"
+import { GetStaticProps } from 'next'
+
+type Episode = {
+  id: string,
+  title: string,
+  members: string,
+  published_at: string,
+  thumbnail: string,
+  description: string,
+  file: {
+    url: string,
+    type: string,
+    duration: string,
+  }
+}
+
+type HomeProps = {
+  episodes: Episode[],
+}
 
 
-export default function Home(props) {
-  console.log(props.episodes)
-
-  //// SPA
-  // useEffect(() => {
-  //   fetch('http://localhost:3333/episodes')
-  //    .then(response => response.json())
-  //    .then(data => console.log(data))
-  // }, [])
+export default function Home(props: HomeProps) {
+  // console.log(props.episodes)
 
   return (
     <div>
@@ -19,21 +30,10 @@ export default function Home(props) {
   )
 }
 
-//// SSR
-// export async function getServerSideProps() {
-//   const response = await fetch('http://localhost:3333/episodes')
-//   const data = await response.json()
-
-//   return {
-//     props: {
-//       episodes: data
-//     }
-//   }
-// }
-
 //// SSG
-export async function getStaticProps() {
-  const response = await fetch('http://localhost:3333/episodes')
+export const getStaticProps: GetStaticProps = async ()  => {
+  const urlApi = 'http://localhost:3333/episodes?_limit=12&_sort=published_at&order=desc'
+  const response = await fetch(urlApi)
   const data = await response.json()
 
   return {
