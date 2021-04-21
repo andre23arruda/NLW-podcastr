@@ -1,3 +1,15 @@
+export function converNowToString(): string {
+    const monthPt = [
+        'Janeiro', 'Fevereiro', 'Março', 'Abril',
+        'Maio', 'Junho', 'Julho','Agosto',
+        'Setembro', 'Outubro','Novembro','Dezembro'
+    ]
+    const daysPt = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb']
+    const now = new Date()
+    const currentDate = `${ daysPt[now.getDay()] }, ${ String(now.getDate()).padStart(2, '0') } de ${ monthPt[now.getMonth()]}`
+    return currentDate
+}
+
 export function convertDurationToStimeString(duration: number): string {
     const hours = Math.floor(duration / 3600)
     const minutes = Math.floor((duration % 3600) / 60)
