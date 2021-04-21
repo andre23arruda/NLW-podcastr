@@ -4,7 +4,8 @@ import Link from 'next/link'
 import { convertDateString, convertDurationToStimeString } from '../utils/convert-data'
 import styles from '../styles/home.module.scss'
 
-type Episode = {id: string,
+type Episode = {
+  id: string,
   title: string,
   members: string,
   publishedAt: string,
