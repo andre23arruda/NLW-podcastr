@@ -1,9 +1,10 @@
+const monthPt = [
+    'Janeiro', 'Fevereiro', 'Março', 'Abril',
+    'Maio', 'Junho', 'Julho','Agosto',
+    'Setembro', 'Outubro','Novembro','Dezembro'
+]
+
 export function converNowToString(): string {
-    const monthPt = [
-        'Janeiro', 'Fevereiro', 'Março', 'Abril',
-        'Maio', 'Junho', 'Julho','Agosto',
-        'Setembro', 'Outubro','Novembro','Dezembro'
-    ]
     const daysPt = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb']
     const now = new Date()
     const currentDate = `${ daysPt[now.getDay()] }, ${ String(now.getDate()).padStart(2, '0') } de ${ monthPt[now.getMonth()]}`
@@ -26,10 +27,10 @@ export function convertDateString(dateString: string): string {
     const date = new Date(dateString)
     const dateResult = [
         String(date.getDate()).padStart(2, '0'),
-        String(date.getMonth() + 1),
+        monthPt[date.getMonth()].slice(0, 3).toLowerCase(),
         String(date.getFullYear())
     ]
-     .join('/')
+     .join(' ')
 
     return dateResult
 }
