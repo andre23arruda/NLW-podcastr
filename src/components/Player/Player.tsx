@@ -86,7 +86,7 @@ function Player() {
                     <button disabled={ !episode }>
                         <img src="/shuffle.svg" alt="Random"/>
                     </button>
-                    <button onClick={ playBefore } disabled={ !episode }>
+                    <button onClick={ playBefore } disabled={ !episode || currentEpisodeIndex == 0 }>
                         <img src="/play-previous.svg" alt="Back"/>
                     </button>
                     <button onClick={ togglePlay } className={ styles.playButton } disabled={ !episode }>
@@ -99,7 +99,7 @@ function Player() {
                             )
                         }
                     </button>
-                    <button onClick={ playNext } disabled={ !episode }>
+                    <button onClick={ playNext } disabled={ !episode || currentEpisodeIndex == episodes.length - 1  }>
                         <img src="/play-next.svg" alt="Next"/>
                     </button>
                     <button disabled={ !episode }>

@@ -4,6 +4,7 @@ import Link from 'next/link'
 
 import styles from './styles.module.scss'
 import Image from 'next/image'
+import { usePlayer } from '../../contexts/PlayerContext'
 
 
 type Episode = {
@@ -22,6 +23,10 @@ type EpisodeProps = {
 }
 
 function Episode({ episode }: EpisodeProps) {
+    const {
+        play
+    } = usePlayer()
+
   	return (
 		<div className={ styles.episode }>
             <div className={ styles.thumbnailContainer }>
@@ -31,7 +36,7 @@ function Episode({ episode }: EpisodeProps) {
                     </button>
                 </Link>
                 <Image width={ 700 } height={ 160 } src={ episode.thumbnail } alt={ episode.title } objectFit="cover"/>
-                <button>
+                <button onClick={ () => { play(episode)} }>
                     <img src="/play.svg" alt="Play episode"/>
                 </button>
             </div>

@@ -3,8 +3,7 @@ import Image  from 'next/image'
 import Link from 'next/link'
 import { convertDateString, convertDurationToStimeString } from '../utils/convert-data'
 import styles from '../styles/home.module.scss'
-import { useContext } from 'react'
-import { PlayerContext } from '../contexts/PlayerContext'
+import { usePlayer } from '../contexts/PlayerContext'
 
 type Episode = {
 	id: string,
@@ -24,7 +23,7 @@ type HomeProps = {
 
 
 function Home({ latestEpisodes, allEpisodes }: HomeProps) {
-	const { playList } = useContext(PlayerContext)
+	const { playList } = usePlayer()
 	const episodes = latestEpisodes.concat(allEpisodes)
 
 	return (
