@@ -11,12 +11,14 @@ type Episode = {
 type PlayerContextProps = {
     episodes: Episode[],
     currentEpisodeIndex: number,
+    isPlaying: boolean,
+    isLooping: boolean,
     play: (episode: Episode) => void,
     playList: (episodes: Episode[], episodeIndex: number) => void,
     playNext: () => void,
     playBefore: () => void,
-    isPlaying: boolean,
     togglePlay: () => void,
+    toggleLoop: () => void,
     changeState: (state: boolean) => void,
 }
 
@@ -32,6 +34,7 @@ export function PlayerContextProvider(props: PlayerContextProviderProps) {
     const [episodes, setEpisodes] = useState([])
     const [currentEpisodeIndex, setCurrentEpisodeIndex] = useState(0)
     const [isPlaying, setIsPlaying] = useState(false)
+    const [isLooping, setIsLooping] = useState(false)
 
     function play(episode: Episode) {
         setEpisodes([episode])
@@ -65,6 +68,10 @@ export function PlayerContextProvider(props: PlayerContextProviderProps) {
         setIsPlaying(!isPlaying)
     }
 
+    function toggleLoop() {
+        setIsLooping(!isLooping)
+    }
+
     function changeState(state) {
         setIsPlaying(state)
     }
@@ -79,8 +86,10 @@ export function PlayerContextProvider(props: PlayerContextProviderProps) {
                 playNext,
                 playBefore,
                 isPlaying,
+                isLooping,
                 togglePlay,
-                changeState
+                changeState,
+                toggleLoop,
             }}
         >
             { props.children }

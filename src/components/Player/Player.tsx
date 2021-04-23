@@ -15,7 +15,9 @@ function Player() {
         episodes,
         currentEpisodeIndex,
         isPlaying,
+        isLooping,
         togglePlay,
+        toggleLoop,
         changeState,
         playNext,
         playBefore
@@ -73,6 +75,7 @@ function Player() {
                             ref={ audioRef }
                             src={ episode.url }
                             autoPlay
+                            loop={ isLooping }
                             onPlay={ () => changeState(true) }
                             onPause={ () => changeState(false) }
                         />
@@ -102,7 +105,7 @@ function Player() {
                     <button onClick={ playNext } disabled={ !episode || currentEpisodeIndex == episodes.length - 1  }>
                         <img src="/play-next.svg" alt="Next"/>
                     </button>
-                    <button disabled={ !episode }>
+                    <button onClick={ toggleLoop } disabled={ !episode }>
                         <img src="/repeat.svg" alt="Repeat"/>
                     </button>
                 </div>
