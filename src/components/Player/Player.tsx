@@ -11,7 +11,16 @@ function Player() {
 
     const audioRef = useRef<HTMLAudioElement>(null)
 
-    const { episodes, currentEpisodeIndex, isPlaying, togglePlay, changeState } = useContext(PlayerContext)
+    const {
+        episodes,
+        currentEpisodeIndex,
+        isPlaying,
+        togglePlay,
+        changeState,
+        playNext,
+        playBefore
+    } = useContext(PlayerContext)
+
     const episode = episodes[currentEpisodeIndex]
 
     useEffect( () => {
@@ -77,7 +86,7 @@ function Player() {
                     <button disabled={ !episode }>
                         <img src="/shuffle.svg" alt="Random"/>
                     </button>
-                    <button disabled={ !episode }>
+                    <button onClick={ playBefore } disabled={ !episode }>
                         <img src="/play-previous.svg" alt="Back"/>
                     </button>
                     <button onClick={ togglePlay } className={ styles.playButton } disabled={ !episode }>
@@ -90,7 +99,7 @@ function Player() {
                             )
                         }
                     </button>
-                    <button disabled={ !episode }>
+                    <button onClick={ playNext } disabled={ !episode }>
                         <img src="/play-next.svg" alt="Next"/>
                     </button>
                     <button disabled={ !episode }>
