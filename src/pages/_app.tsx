@@ -6,6 +6,7 @@ import Player from '../components/Player/Player'
 import PlayerContext from '../contexts/PlayerContext'
 import { useState } from 'react'
 
+
 function MyApp({ Component, pageProps }) {
 
 	const [episodes, setEpisodes] = useState([])

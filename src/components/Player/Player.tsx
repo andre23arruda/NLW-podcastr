@@ -1,15 +1,25 @@
 import Image from 'next/image'
-import { useContext } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import PlayerContext from '../../contexts/PlayerContext'
 import styles from './styles.module.scss'
 import Slider from 'rc-slider'
 
 import 'rc-slider/assets/index.css'
 
+
 function Player() {
 
-    const { episodes, currentEpisodeIndex, isPlaying, togglePlay }  = useContext(PlayerContext)
+    const audioRef = useRef<HTMLAudioElement>(null)
+
+    const { episodes, currentEpisodeIndex, isPlaying, togglePlay } = useContext(PlayerContext)
     const episode = episodes[currentEpisodeIndex]
+
+    useEffect( () => {
+        if (!audioRef.current) return
+        else if (isPlaying) audioRef.current.play()
+        else audioRef.current.pause()
+    }, [isPlaying] )
+
 
     return (
         <div className={ styles.playerContainer }>
@@ -49,7 +59,7 @@ function Player() {
                         )
                     }
 
-                    { episode && <audio src={ episode.url } autoPlay/> }
+                    { episode && <audio ref={ audioRef } src={ episode.url } autoPlay/> }
 
                     <span>00:00</span>
 
