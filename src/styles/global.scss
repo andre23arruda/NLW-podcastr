@@ -34,12 +34,14 @@
 
 :root {
   --white: #FFF;
+  --black: rgb(24, 24, 24);
 
   --gray-50: #F7F8FA;
   --gray-100: #E6E8EB;
   --gray-200: #AFB2B1;
   --gray-500: #808080;
   --gray-800: #494D4B;
+  --gray-900: #1d1d1d;
 
   --green-500: #04D361;
 
@@ -50,17 +52,17 @@
 }
 
 body {
-  background: var(--gray-50);
+  background: var(--black);
 }
 
 body, input, textarea, button {
   font: 500 1rem sans-serif;
-  color: var(--gray-500);
+  color: var(--gray-100);
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
-  color: var(--gray-800);
+  color: var(--gray-100);
 }
 
 h1 {
@@ -73,6 +75,10 @@ h2 {
 
 button {
   cursor: pointer;
+
+  &:focus {
+    outline: solid 0.25rem rgba(255, 255, 255, 0.138);
+  }
 }
 
 @media (max-width: 1080px) {
@@ -86,3 +92,26 @@ button {
     font-size: 87.5%
   }
 }
+
+@mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white, 50%)) {
+  ::-webkit-scrollbar {
+      width:  $size;
+      height: $size;
+  }
+
+  ::-webkit-scrollbar-thumb {
+      background: $foreground-color;
+  }
+
+  ::-webkit-scrollbar-track {
+      background: $background-color;
+  }
+
+  // For Internet Explorer
+  body {
+    scrollbar-face-color: $foreground-color;
+    scrollbar-track-color: $background-color;
+  }
+}
+
+@include scrollbars(0.5em, rgb(110, 94, 130));

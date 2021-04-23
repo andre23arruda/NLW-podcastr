@@ -1,23 +1,37 @@
+import Image from 'next/image'
 import { useContext } from 'react'
 import PlayerContext from '../../contexts/PlayerContext'
 import styles from './styles.module.scss'
 
 function Player() {
 
-    const playerContext = useContext(PlayerContext)
+    const { episodes, currentEpisodeIndex }  = useContext(PlayerContext)
+    const episode = episodes[currentEpisodeIndex]
 
     return (
         <div className={ styles.playerContainer }>
             <header>
                 <img src="/playing.svg" alt="Tocando agora"/>
-                <strong>Tocando agora { playerContext }</strong>
+                <strong>Tocando agora { episode?.title }</strong>
             </header>
 
-            <div className={ styles.emptyPlayer }>
-                <strong>Selecione um podcast para ouvir</strong>
-            </div>
+            { episode
+                ?(
+                    <div className={ styles.currentEpisode }>
+                        <Image width={ 592 } height={ 592 } src={ episode.thumbnail } alt={ episode.title } objectFit="initial"></Image>
+                        <strong>{ episode.title }</strong>
+                        <span>{ episode.members }</span>
+                    </div>
+                )
+                :(
+                    <div className={ styles.emptyPlayer }>
+                        <strong>Selecione um podcast para ouvir</strong>
+                    </div>
+                )
+            }
 
-            <footer className={ styles.empty }>
+
+            <footer className={ !episode && styles.empty }>
                 <div className={ styles.progress }>
                     <span>00:00</span>
                     <div className={ styles.slider }>

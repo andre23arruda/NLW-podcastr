@@ -3,6 +3,8 @@ import Image  from 'next/image'
 import Link from 'next/link'
 import { convertDateString, convertDurationToStimeString } from '../utils/convert-data'
 import styles from '../styles/home.module.scss'
+import { useContext } from 'react'
+import PlayerContext from '../contexts/PlayerContext'
 
 type Episode = {
 	id: string,
@@ -21,7 +23,8 @@ type HomeProps = {
 }
 
 
-export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
+function Home({ latestEpisodes, allEpisodes }: HomeProps) {
+	const { play } = useContext(PlayerContext)
 
 	return (
 		<div className={ styles.homePage }>
@@ -42,7 +45,7 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
 									<span>{ episode.duration }</span>
 								</div>
 
-								<button>
+								<button onClick={ () => play(episode) }>
 									<img src="/play-green.svg" alt="Play episode"/>
 								</button>
 
@@ -83,7 +86,7 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
 									<td className={ styles.episodePublishedAt }>{ episode.publishedAt }</td>
 									<td>{ episode.duration }</td>
 									<td>
-										<button>
+										<button onClick={ () => play(episode) }>
 											<img src="/play-green.svg" alt="Play episode"/>
 										</button>
 									</td>
@@ -91,13 +94,14 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
 								)
 							})
 						}
-				</tbody>
+					</tbody>
 				</table>
 
 			</section>
 		</div>
 	)
 }
+export default Home
 
 // Consulta API
 export const getStaticProps: GetStaticProps = async ()  => {

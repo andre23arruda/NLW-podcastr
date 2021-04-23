@@ -35,7 +35,11 @@
             }
 
             &:hover {
-                filter: brightness(0.95);
+                filter: brightness(0.8);
+            }
+
+            &:focus {
+                outline: 0;
             }
         }
     }
@@ -76,7 +80,7 @@
     .description {
         margin-top: 2rem;
         line-height: 1.675rem;
-        color: var(--gray-800);
+        color: var(--gray-100);
 
         p {
             margin: 1.5rem 0;

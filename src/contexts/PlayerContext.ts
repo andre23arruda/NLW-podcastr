@@ -1,5 +1,21 @@
-import { createContext } from "react";
+import { createContext } from "react"
 
-const PlayerContext = createContext('')
+
+type Episode = {
+    title: string,
+    members: string,
+    thumbnail: string,
+    duration: string,
+    url: string,
+}
+
+type PlayerContextProps = {
+    episodes: Episode[],
+    currentEpisodeIndex: number,
+    play: (episode: Episode) => void,
+}
+
+
+const PlayerContext = createContext({} as PlayerContextProps)
 
 export default PlayerContext

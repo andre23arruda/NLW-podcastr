@@ -13,7 +13,12 @@
         display: flex;
         align-items: center;
         gap: 16px;
+
+        strong {
+            text-align: left;
+        }
     }
+
 
     strong {
         font-family: 'Lexend';
@@ -26,6 +31,28 @@
         &.empty {
             opacity: 0.5;
         }
+    }
+}
+
+.currentEpisode {
+    text-align: center;
+
+    img {
+        border-radius: 2rem;
+    }
+
+    strong {
+        display: block;
+        margin-top: 1rem;
+        font: 600 1.25rem Lexend;
+        line-height: 1.75rem;
+    }
+
+    span {
+        display: block;
+        margin-top: 2rem;
+        opacity: 0.6;
+        line-height: 1.5rem;
     }
 }
 
