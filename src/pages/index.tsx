@@ -24,17 +24,17 @@ type HomeProps = {
 
 
 function Home({ latestEpisodes, allEpisodes }: HomeProps) {
-	const { play } = useContext(PlayerContext)
+	const { playList } = useContext(PlayerContext)
+	const episodes = latestEpisodes.concat(allEpisodes)
 
 	return (
 		<div className={ styles.homePage }>
 			<section className={ styles.latestEpisodes }>
 				<h2>Últimos lançamentos</h2>
 				<ul>
-					{
-						latestEpisodes.map(episode => {
-							return (
-								<li key={ episode.id }>
+					{ latestEpisodes.map((episode, index) => {
+						return (
+							<li key={ episode.id }>
 								<Image width={ 192 } height={ 192 } src={ episode.thumbnail } alt={ episode.title } objectFit="cover"/>
 								<div className={ styles.episodeDetails }>
 									<Link href={`/episode/${ episode.id }`}>
@@ -45,14 +45,12 @@ function Home({ latestEpisodes, allEpisodes }: HomeProps) {
 									<span>{ episode.duration }</span>
 								</div>
 
-								<button onClick={ () => play(episode) }>
+								<button onClick={ () => playList(episodes, index) }>
 									<img src="/play-green.svg" alt="Play episode"/>
 								</button>
-
-								</li>
-							)
-						})
-					}
+							</li>
+						)
+					}) }
 				</ul>
 			</section>
 
@@ -70,9 +68,8 @@ function Home({ latestEpisodes, allEpisodes }: HomeProps) {
 						</tr>
 					</thead>
 					<tbody>
-						{
-							allEpisodes.map(episode => {
-								return (
+						{ allEpisodes.map((episode, index) => {
+							return (
 								<tr key={ episode.id }>
 									<td className={ styles.episodeImage }>
 										<Image width={ 120 } height={ 120 } src={ episode.thumbnail } alt={ episode.title } objectFit="cover"/>
@@ -86,14 +83,13 @@ function Home({ latestEpisodes, allEpisodes }: HomeProps) {
 									<td className={ styles.episodePublishedAt }>{ episode.publishedAt }</td>
 									<td>{ episode.duration }</td>
 									<td>
-										<button onClick={ () => play(episode) }>
+										<button onClick={ () => playList(episodes, index + latestEpisodes.length) }>
 											<img src="/play-green.svg" alt="Play episode"/>
 										</button>
 									</td>
 								</tr>
-								)
-							})
-						}
+							)
+						}) }
 					</tbody>
 				</table>
 
