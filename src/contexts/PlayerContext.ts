@@ -13,6 +13,8 @@ type PlayerContextProps = {
     episodes: Episode[],
     currentEpisodeIndex: number,
     play: (episode: Episode) => void,
+    isPlaying: boolean,
+    togglePlay: () => void,
 }
 
 

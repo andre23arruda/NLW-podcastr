@@ -8,7 +8,7 @@ import 'rc-slider/assets/index.css'
 
 function Player() {
 
-    const { episodes, currentEpisodeIndex }  = useContext(PlayerContext)
+    const { episodes, currentEpisodeIndex, isPlaying, togglePlay }  = useContext(PlayerContext)
     const episode = episodes[currentEpisodeIndex]
 
     return (
@@ -49,6 +49,8 @@ function Player() {
                         )
                     }
 
+                    { episode && <audio src={ episode.url } autoPlay/> }
+
                     <span>00:00</span>
 
                 </div>
@@ -60,8 +62,15 @@ function Player() {
                     <button disabled={ !episode }>
                         <img src="/play-previous.svg" alt="Back"/>
                     </button>
-                    <button className={ styles.playButton }>
-                        <img src="/play.svg" alt="Play"/>
+                    <button onClick={ togglePlay } className={ styles.playButton } disabled={ !episode }>
+                        { !isPlaying
+                            ?(
+                                <img src="/play.svg" alt="Play"/>
+                            )
+                            :(
+                                <img src="/pause.svg" alt="Play"/>
+                            )
+                        }
                     </button>
                     <button disabled={ !episode }>
                         <img src="/play-next.svg" alt="Next"/>
