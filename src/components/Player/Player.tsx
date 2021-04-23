@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { useContext, useEffect, useRef } from 'react'
-import PlayerContext from '../../contexts/PlayerContext'
+import { PlayerContext } from '../../contexts/PlayerContext'
 import styles from './styles.module.scss'
 import Slider from 'rc-slider'
 
@@ -11,7 +11,7 @@ function Player() {
 
     const audioRef = useRef<HTMLAudioElement>(null)
 
-    const { episodes, currentEpisodeIndex, isPlaying, togglePlay } = useContext(PlayerContext)
+    const { episodes, currentEpisodeIndex, isPlaying, togglePlay, changeState } = useContext(PlayerContext)
     const episode = episodes[currentEpisodeIndex]
 
     useEffect( () => {
@@ -59,7 +59,15 @@ function Player() {
                         )
                     }
 
-                    { episode && <audio ref={ audioRef } src={ episode.url } autoPlay/> }
+                    { episode &&
+                        <audio
+                            ref={ audioRef }
+                            src={ episode.url }
+                            autoPlay
+                            onPlay={ () => changeState(true) }
+                            onPause={ () => changeState(false) }
+                        />
+                    }
 
                     <span>00:00</span>
 

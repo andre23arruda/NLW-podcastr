@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { convertDateString, convertDurationToStimeString } from '../utils/convert-data'
 import styles from '../styles/home.module.scss'
 import { useContext } from 'react'
-import PlayerContext from '../contexts/PlayerContext'
+import { PlayerContext } from '../contexts/PlayerContext'
 
 type Episode = {
 	id: string,
