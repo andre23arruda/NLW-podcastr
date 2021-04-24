@@ -5,6 +5,7 @@ import Link from 'next/link'
 import styles from './styles.module.scss'
 import Image from 'next/image'
 import { usePlayer } from '../../contexts/PlayerContext'
+import Head from 'next/head'
 
 
 type Episode = {
@@ -30,6 +31,10 @@ function Episode({ episode }: EpisodeProps) {
 
   	return (
 		<div className={ styles.episode }>
+            <Head>
+                <title>{ episode.title }</title>
+            </Head>
+
             <div className={ styles.thumbnailContainer }>
                 <Link href="/">
                     <button>

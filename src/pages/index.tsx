@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { convertDateString, convertDurationToStimeString } from '../utils/convert-data'
 import styles from '../styles/home.module.scss'
 import { usePlayer } from '../contexts/PlayerContext'
+import Head from 'next/head'
 
 type Episode = {
 	id: string,
@@ -29,6 +30,10 @@ function Home({ latestEpisodes, allEpisodes }: HomeProps) {
 
 	return (
 		<div className={ styles.homePage }>
+			<Head>
+                <title>Podcastr | Todos os episódios</title>
+            </Head>
+
 			<section className={ styles.latestEpisodes }>
 				<h2>Últimos lançamentos</h2>
 				<ul>
