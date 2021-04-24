@@ -1,23 +1,34 @@
 import Image from 'next/image'
-import { useContext, useEffect, useRef } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { PlayerContext } from '../../contexts/PlayerContext'
 import styles from './styles.module.scss'
 import Slider from 'rc-slider'
 
 import 'rc-slider/assets/index.css'
+import { convertDurationToStimeString } from '../../utils/convert-data'
 
 
 function Player() {
 
     const audioRef = useRef<HTMLAudioElement>(null)
+    const [progress, setProgress] = useState(0)
+
+    function progressListener() {
+        audioRef.current.currentTime = 0
+        audioRef.current.addEventListener('timeupdate', () => {
+            setProgress(Math.floor(audioRef.current.currentTime))
+        })
+    }
 
     const {
         episodes,
         currentEpisodeIndex,
         isPlaying,
         isLooping,
+        isShuffled,
         togglePlay,
         toggleLoop,
+        toggleShuffle,
         changeState,
         playNext,
         playBefore
@@ -57,7 +68,7 @@ function Player() {
 
             <footer className={ !episode && styles.empty }>
                 <div className={ styles.progress }>
-                    <span>00:00</span>
+                    <span>{ convertDurationToStimeString(progress) }</span>
 
                     { episode
                         ?(
@@ -78,15 +89,16 @@ function Player() {
                             loop={ isLooping }
                             onPlay={ () => changeState(true) }
                             onPause={ () => changeState(false) }
+                            onLoadedMetadata={ progressListener }
                         />
                     }
 
-                    <span>00:00</span>
+                    <span>{ episode?.duration ?? '00:00'}</span>
 
                 </div>
 
                 <div className={ styles.buttons }>
-                    <button disabled={ !episode }>
+                    <button onClick={ toggleShuffle } disabled={ !episode || episodes.length == 1 } className={ (isShuffled && episodes.length != 1)  &&  styles.isActive }>
                         <img src="/shuffle.svg" alt="Random"/>
                     </button>
                     <button onClick={ playBefore } disabled={ !episode || currentEpisodeIndex == 0 }>
@@ -105,7 +117,7 @@ function Player() {
                     <button onClick={ playNext } disabled={ !episode || currentEpisodeIndex == episodes.length - 1  }>
                         <img src="/play-next.svg" alt="Next"/>
                     </button>
-                    <button onClick={ toggleLoop } disabled={ !episode }>
+                    <button onClick={ toggleLoop } disabled={ !episode } className={ isLooping && styles.isActive }>
                         <img src="/repeat.svg" alt="Repeat"/>
                     </button>
                 </div>

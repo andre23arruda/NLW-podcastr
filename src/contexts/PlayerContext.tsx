@@ -13,12 +13,14 @@ type PlayerContextProps = {
     currentEpisodeIndex: number,
     isPlaying: boolean,
     isLooping: boolean,
+    isShuffled: boolean,
     play: (episode: Episode) => void,
     playList: (episodes: Episode[], episodeIndex: number) => void,
     playNext: () => void,
     playBefore: () => void,
     togglePlay: () => void,
     toggleLoop: () => void,
+    toggleShuffle: () => void,
     changeState: (state: boolean) => void,
 }
 
@@ -35,6 +37,7 @@ export function PlayerContextProvider(props: PlayerContextProviderProps) {
     const [currentEpisodeIndex, setCurrentEpisodeIndex] = useState(0)
     const [isPlaying, setIsPlaying] = useState(false)
     const [isLooping, setIsLooping] = useState(false)
+    const [isShuffled, setIsShuffled] = useState(false)
 
     function play(episode: Episode) {
         setEpisodes([episode])
@@ -50,6 +53,11 @@ export function PlayerContextProvider(props: PlayerContextProviderProps) {
 
     function playNext() {
         let newEpisodeIndex = currentEpisodeIndex + 1
+
+        if (isShuffled) {
+            newEpisodeIndex = Math.floor(Math.random() * episodes.length)
+        }
+
         if (newEpisodeIndex >= episodes.length) {
             newEpisodeIndex = 0
         }
@@ -58,6 +66,11 @@ export function PlayerContextProvider(props: PlayerContextProviderProps) {
 
     function playBefore() {
         let newEpisodeIndex = currentEpisodeIndex - 1
+
+        if (isShuffled) {
+            newEpisodeIndex = Math.floor(Math.random() * episodes.length)
+        }
+
         if (newEpisodeIndex < 0) {
             newEpisodeIndex = episodes.length - 1
         }
@@ -70,6 +83,10 @@ export function PlayerContextProvider(props: PlayerContextProviderProps) {
 
     function toggleLoop() {
         setIsLooping(!isLooping)
+    }
+
+    function toggleShuffle() {
+        setIsShuffled(!isShuffled)
     }
 
     function changeState(state) {
@@ -87,9 +104,11 @@ export function PlayerContextProvider(props: PlayerContextProviderProps) {
                 playBefore,
                 isPlaying,
                 isLooping,
+                isShuffled,
                 togglePlay,
                 changeState,
                 toggleLoop,
+                toggleShuffle,
             }}
         >
             { props.children }

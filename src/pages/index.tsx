@@ -12,6 +12,7 @@ type Episode = {
 	publishedAt: string,
 	thumbnail: string,
 	description: string,
+	durationRaw: number,
 	duration: string,
 	url: string,
 }
@@ -106,21 +107,22 @@ export const getStaticProps: GetStaticProps = async ()  => {
 
 	const episodes = data.map(episode => {
 		return {
-		id: episode.id,
-		title: episode.title,
-		thumbnail: episode.thumbnail,
-		members: episode.members,
-		publishedAt: convertDateString(episode.published_at),
-		duration: convertDurationToStimeString(episode.file.duration),
-		description: episode.description,
-		url: episode.file.url,
+			id: episode.id,
+			title: episode.title,
+			thumbnail: episode.thumbnail,
+			members: episode.members,
+			publishedAt: convertDateString(episode.published_at),
+			duration: convertDurationToStimeString(episode.file.duration),
+			durationRaw: episode.file.duration,
+			description: episode.description,
+			url: episode.file.url,
 		}
 	})
 
 	return {
 		props: {
-		latestEpisodes: episodes.slice(0, 2),
-		allEpisodes: episodes.slice(2,),
+			latestEpisodes: episodes.slice(0, 2),
+			allEpisodes: episodes.slice(2,),
 		},
 		revalidate: 60 * 60 * 8
 	}

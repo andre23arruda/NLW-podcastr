@@ -15,6 +15,7 @@ type Episode = {
     thumbnail: string,
     description: string,
     duration: string,
+    durationRaw: number,
     url: string,
 }
 
