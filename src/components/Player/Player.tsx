@@ -20,6 +20,11 @@ function Player() {
         })
     }
 
+    function changeAudioSlider(newProgress: number) {
+        audioRef.current.currentTime = newProgress
+        setProgress(newProgress)
+    }
+
     const {
         episodes,
         currentEpisodeIndex,
@@ -72,7 +77,12 @@ function Player() {
 
                     { episode
                         ?(
-                            <Slider></Slider>
+                            <Slider
+                                max={ episode.durationRaw }
+                                value={ progress }
+                                onChange={ changeAudioSlider }
+                            >
+                            </Slider>
                         )
                         :(
                             <div className={ styles.slider }>
@@ -90,6 +100,7 @@ function Player() {
                             onPlay={ () => changeState(true) }
                             onPause={ () => changeState(false) }
                             onLoadedMetadata={ progressListener }
+                            onEnded={ playNext }
                         />
                     }
 

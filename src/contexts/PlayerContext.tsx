@@ -5,6 +5,7 @@ type Episode = {
     members: string,
     thumbnail: string,
     duration: string,
+    durationRaw: number,
     url: string,
 }
 
@@ -59,7 +60,8 @@ export function PlayerContextProvider(props: PlayerContextProviderProps) {
         }
 
         if (newEpisodeIndex >= episodes.length) {
-            newEpisodeIndex = 0
+            // newEpisodeIndex = 0
+            clearEpisodes()
         }
         setCurrentEpisodeIndex(newEpisodeIndex)
     }
@@ -72,7 +74,8 @@ export function PlayerContextProvider(props: PlayerContextProviderProps) {
         }
 
         if (newEpisodeIndex < 0) {
-            newEpisodeIndex = episodes.length - 1
+            // newEpisodeIndex = episodes.length - 1
+            clearEpisodes()
         }
         setCurrentEpisodeIndex(newEpisodeIndex)
     }
@@ -83,14 +86,20 @@ export function PlayerContextProvider(props: PlayerContextProviderProps) {
 
     function toggleLoop() {
         setIsLooping(!isLooping)
+        setIsShuffled(false)
     }
 
     function toggleShuffle() {
         setIsShuffled(!isShuffled)
+        setIsLooping(false)
     }
 
     function changeState(state) {
         setIsPlaying(state)
+    }
+
+    function clearEpisodes() {
+        setEpisodes([])
     }
 
     return (
